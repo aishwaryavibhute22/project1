@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Room Allocation</title>
+<style>
+/*css code*/
+h1 { border-bottom: 1px seagreen;
+padding-bottom: 5px;
+}
+  body{
+    background-color: aquamarine;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color:black;
+
+    #shuffle-button {
+      background-color: white;
+      color: black;
+      border: 0cap;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+  }
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>room shuffling</h1>
+
+    <button id="shuffle-button"><h3>shuffle</h3></button>
+    
+    <div class="rooms-container" id="rooms-container">
+      <!-- Rooms and students will be generated here -->
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("shuffle-button").addEventListener("click", shuffleAndAllocate);
+
+    function shuffleAndAllocate() {
+      const students = [
+         "Nikita Gajanan Masurkar", "Dipa Raosaheb Raurale", "Dhanashri Waman Kakde", "Suchita Dayaram Bondre", "Vaishnavi Siddheshwar Paropate", "Dhanashri Bilbile",
+	       "Sakshi Gajanan Paraskar","Shubhangi Vinay Wankhade", "Payal Tulashi dhok", "Shweta khadse", "Manasvi Rajabhau Yekhande", "Arpita Nilesh Belsare", "Shrutika Subhashrao Bhagwat", 
+         "Shital Bharatsingh Mohare", "Khushi Onkar Kacchwah", "Chanda Namdev Dod", "Aakanksha Rakesh Motghare", "Vaishnavi Sheshnavi Khode",	"Pragati Radhesham Dike","Chaitali Banduji Dhoke", "Sarika Rajendra Shende", 
+         "Bhagyashri Mahadeo Sonwane", "Mohini Jagdish Ramteke", "Harsha Rajendra Chandurkar", "Pratima Shrikrushna Akolkar",
+         "Amruta Sunil Suralkar", "Shubhangi Prakash Dhage", "Nidhi Sewakram Bagde", "Divya Bhagawan Kusumbe", "Sapana Dipak Sawai", "Pratiksha Ashokrav Shapane", "Tejashri Rajendra Aware"
+      ];
+
+      
+      for (let i = students.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [students[i], students[j]] = [students[j], students[i]];
+      }
+      
+      
+      const labels = ['A', 'B', 'C'];
+      let labelIndex = 0;
+
+      const roomsContainer = document.getElementById("rooms-container");
+      roomsContainer.innerHTML = "";
+
+      const studentsPerRoom = 3;
+      const numberOfRooms = Math.ceil(students.length / studentsPerRoom);
+
+      for (let i = 0; i < 8; i++) {
+      const room = document.createElement("div");
+      room.classList.add("room");
+      room.innerHTML = `<h2>Room ${i + 1}</h2>`; 
+
+
+        const ul = document.createElement("ul");
+        for (let j = 0; j < studentsPerRoom; j++) {
+          const studentIndex = i * studentsPerRoom + j;
+          if (studentIndex < students.length) {
+            const li = document.createElement("li");
+            li.textContent = `${labels[labelIndex]}: ${students[studentIndex]}`;
+            ul.appendChild(li);
+            labelIndex = (labelIndex + 1) % labels.length; 
+          }
+        }
+
+        room.appendChild(ul);
+        roomsContainer.appendChild(room);
+      }
+    }
+  </script>
+</body>
+</html>
